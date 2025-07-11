@@ -1,0 +1,5 @@
+Para rodar o programa, tenha instalado a biblioteca SDL (Versão usada: 3.2.16) e rodar com o gcc direto no terminal
+Comando que uso: gcc source\3d-space.c -o output\programa.exe -I "C:\SDL\x86_64-w64-mingw32\include" -L "C:\SDL\x86_64-w64-mingw32\lib" -lSDL3
+Como funciona o Comando acima? - -I --> Adiciona os headers para a busca do compilador
+                               - -L --> Adiciona os arquivos c para a busca do compilador
+                               - -l --> Nomeia a biblioteca inserida 
