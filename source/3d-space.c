@@ -1,10 +1,9 @@
-/* woodeneye-008.c ... */
 
 /*
- * This code is public domain. Feel free to use it for any purpose!
+ * A base desse código é de domínio público e está sendo adaptado para o projeto
  */
 
-#define SDL_MAIN_USE_CALLBACKS 1 /* use the callbacks instead of main() */
+#define SDL_MAIN_USE_CALLBACKS 1 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <math.h>
@@ -26,7 +25,7 @@ typedef struct {
     float radius, height;
     unsigned char color[3];
     unsigned char wasd;
-    Camera camera; // Camera for zoom functionality
+    Camera camera; 
 } Player;
 
 typedef struct {
