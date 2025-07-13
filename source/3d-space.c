@@ -7,8 +7,10 @@
 #define SDL_MAIN_USE_CALLBACKS 1 /* use the callbacks instead of main() */
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <math.h>
+#include "../include/cre_zoom.h"
 
-#define MAP_BOX_SCALE 32
+#define MAP_BOX_SCALE 24
 #define MAP_BOX_EDGES_LEN (12 + MAP_BOX_SCALE * 2)
 #define MAX_PLAYER_COUNT 4
 #define CIRCLE_DRAW_SIDES 32
@@ -24,6 +26,7 @@ typedef struct {
     float radius, height;
     unsigned char color[3];
     unsigned char wasd;
+    Camera camera; // Camera for zoom functionality
 } Player;
 
 typedef struct {
@@ -211,7 +214,7 @@ static void draw(SDL_Renderer *renderer, const float (*edges)[6], const Player p
             float mod_y = (float)(i / part_hor);
             float hor_origin = (mod_x + 0.5f) * size_hor;
             float ver_origin = (mod_y + 0.5f) * size_ver;
-            float cam_origin = (float)(0.5 * SDL_sqrt(size_hor * size_hor + size_ver * size_ver));
+            float cam_origin = (float)(0.5 * SDL_sqrt(size_hor * size_hor + size_ver * size_ver)*(player->camera.fov/60));
             float hor_offset = mod_x * size_hor;
             float ver_offset = mod_y * size_ver;
             SDL_Rect rect;
@@ -296,6 +299,7 @@ static void initPlayers(Player *players, int len)
         players[i].color[0] = (i & 1) ? players[i].color[0] : ~players[i].color[0];
         players[i].color[1] = (i & 1) ? players[i].color[1] : ~players[i].color[1];
         players[i].color[2] = (i & 1) ? players[i].color[2] : ~players[i].color[2];
+        camera_init(&players[i].camera);
     }
 }
 
@@ -445,6 +449,15 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
                 if (sym == SDLK_S) players[index].wasd &= 27;
                 if (sym == SDLK_D) players[index].wasd &= 23;
                 if (sym == SDLK_SPACE) players[index].wasd &= 15;
+            }
+            break;
+        }
+        case SDL_EVENT_MOUSE_WHEEL: {
+            int index = whoseMouse(event->wheel.which, players, player_count);
+            if (event->wheel.y > 0) {
+                camera_zoom_in(&players[index].camera, 5.0f);
+            } else if (event->wheel.y < 0) {
+                camera_zoom_out(&players[index].camera, 5.0f);
             }
             break;
         }
