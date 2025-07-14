@@ -2,7 +2,7 @@
 #define CRE_ZOOM_H
 
 typedef struct Camera {
-    float fov; // Field of view in degrees
+    float fov;
     float min_fov;
     float max_fov;
 } Camera;

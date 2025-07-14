@@ -1,4 +1,3 @@
-
 /*
  * A base desse código é de domínio público e está sendo adaptado para o projeto
  */
@@ -7,11 +6,12 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <math.h>
-#include "../include/cre_zoom.h"
+#include "../include/CRE_zoom.h"
+#include "../include/CRE_menu-main.h"
 
 #define MAP_BOX_SCALE 24
 #define MAP_BOX_EDGES_LEN (12 + MAP_BOX_SCALE * 2)
-#define MAX_PLAYER_COUNT 4
+#define MAX_PLAYER_COUNT 2
 #define CIRCLE_DRAW_SIDES 32
 #define CIRCLE_DRAW_SIDES_LEN (CIRCLE_DRAW_SIDES + 1)
 
@@ -280,7 +280,7 @@ static void initPlayers(Player *players, int len)
     int i;
     for (i = 0; i < len; i++) {
         players[i].pos[0] = 8.0 * (i & 1 ? -1.0 : 1.0);
-        players[i].pos[1] = 0;
+        players[i].pos[1] = -20;
         players[i].pos[2] = 8.0 * (i & 1 ? -1.0 : 1.0) * (i & 2 ? -1.0 : 1.0);
         players[i].vel[0] = 0;
         players[i].vel[1] = 0;
