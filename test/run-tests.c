@@ -1,6 +1,7 @@
 #define SDL_MAIN_USE_CALLBACKS 1  
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include "../include/cre_menu-main.h"
 
 /*gcc .\test\run-tests.c .\source\cre_menu-main.c -o .\output\teste.exe -I "C:\SDL\x86_64-w64-mingw32\include" -I "C:\SDL_ttf\x86_64-w64-mingw32\include" -L "C:\SDL\x86_64-w64-mingw32\lib" -L "C:\SDL_ttf\x86_64-w64-mingw32\lib" -lSDL3 -lSDL3_ttf*/
@@ -8,8 +9,7 @@
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
-SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
-{
+SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     SDL_SetAppMetadata("Run test app", "1.0", "com.run.test-app");
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -62,5 +62,5 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 /* This function runs once at shutdown. */
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
-    /* SDL will clean up the window/renderer for us. */
+    
 }
