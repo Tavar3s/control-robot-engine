@@ -3,20 +3,21 @@
 #include <SDL3/SDL_main.h>
 #include "../include/cre_menu-main.h"
 
+/*gcc .\test\run-tests.c .\source\cre_menu-main.c -o .\output\teste.exe -I "C:\SDL\x86_64-w64-mingw32\include" -I "C:\SDL_ttf\x86_64-w64-mingw32\include" -L "C:\SDL\x86_64-w64-mingw32\lib" -L "C:\SDL_ttf\x86_64-w64-mingw32\lib" -lSDL3 -lSDL3_ttf*/
+
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
-static int show_rect = 0; // Flag to control rectangle visibility
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
-    SDL_SetAppMetadata("Example Renderer Clear", "1.0", "com.example.renderer-clear");
+    SDL_SetAppMetadata("Run test app", "1.0", "com.run.test-app");
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    if (!SDL_CreateWindowAndRenderer("examples/renderer/clear", 640, 480, 0, &window, &renderer)) {
+    if (!SDL_CreateWindowAndRenderer("run/test/app", 640, 480, 0, &window, &renderer)) {
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
@@ -50,7 +51,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
     // Draw rectangle if flag is set
     if (get_menu_visibility()) {
-        draw_hud(renderer, 640, 480); // Draw the HUD/menu overlay
+        draw_hud(renderer, 640, 480, 20, 5, 2); // Draw the HUD/menu overlay
     }
 
     SDL_RenderPresent(renderer);
