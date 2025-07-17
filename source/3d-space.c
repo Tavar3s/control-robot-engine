@@ -14,6 +14,8 @@
 #define MAX_PLAYER_COUNT 2
 #define CIRCLE_DRAW_SIDES 32
 #define CIRCLE_DRAW_SIDES_LEN (CIRCLE_DRAW_SIDES + 1)
+#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 480
 
 typedef struct {
     SDL_MouseID mouse;
@@ -62,47 +64,6 @@ static int whoseKeyboard(SDL_KeyboardID keyboard, const Player players[], int pl
         if (players[i].keyboard == keyboard) return i;
     }
     return -1;
-}
-
-static void shoot(int shooter, Player players[], int players_len)
-{
-    int i, j;
-    double x0 = players[shooter].pos[0];
-    double y0 = players[shooter].pos[1];
-    double z0 = players[shooter].pos[2];
-    double bin_rad = SDL_PI_D / 2147483648.0;
-    double yaw_rad   = bin_rad * players[shooter].yaw;
-    double pitch_rad = bin_rad * players[shooter].pitch;
-    double cos_yaw   = SDL_cos(  yaw_rad);
-    double sin_yaw   = SDL_sin(  yaw_rad);
-    double cos_pitch = SDL_cos(pitch_rad);
-    double sin_pitch = SDL_sin(pitch_rad);
-    double vx = -sin_yaw*cos_pitch;
-    double vy =          sin_pitch;
-    double vz = -cos_yaw*cos_pitch;
-    for (i = 0; i < players_len; i++) {
-        if (i == shooter) continue;
-        Player *target = &(players[i]);
-        int hit = 0;
-        for (j = 0; j < 2; j++) {
-            double r = target->radius;
-            double h = target->height;
-            double dx = target->pos[0] - x0;
-            double dy = target->pos[1] - y0 + (j == 0 ? 0 : r - h);
-            double dz = target->pos[2] - z0;
-            double vd = vx*dx + vy*dy + vz*dz;
-            double dd = dx*dx + dy*dy + dz*dz;
-            double vv = vx*vx + vy*vy + vz*vz;
-            double rr = r * r;
-            if (vd < 0) continue;
-            if (vd * vd >= vv * (dd - rr)) hit += 1;
-        }
-        if (hit) {
-            target->pos[0] = (double)(MAP_BOX_SCALE * (SDL_rand(256) - 128)) / 256;
-            target->pos[1] = (double)(MAP_BOX_SCALE * (SDL_rand(256) - 128)) / 256;
-            target->pos[2] = (double)(MAP_BOX_SCALE * (SDL_rand(256) - 128)) / 256;
-        }
-    }
 }
 
 static void update(Player *players, int players_len, Uint64 dt_ns)
@@ -352,7 +313,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         return SDL_APP_FAILURE;
     }
-    if (!SDL_CreateWindowAndRenderer("cre/demo/tavar3s", 640, 480, 0, &as->window, &as->renderer)) {
+    if (!SDL_CreateWindowAndRenderer("cre/demo/tavar3s", WINDOW_WIDTH, WINDOW_HEIGHT, 0, &as->window, &as->renderer)) {
         return SDL_APP_FAILURE;
     }
 
@@ -405,14 +366,6 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
                         break;
                     }
                 }
-            }
-            break;
-        }
-        case SDL_EVENT_MOUSE_BUTTON_DOWN: {
-            SDL_MouseID id = event->button.which;
-            int index = whoseMouse(id, players, player_count);
-            if (index >= 0) {
-                shoot(index, players, player_count);
             }
             break;
         }
