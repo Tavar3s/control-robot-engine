@@ -332,7 +332,7 @@ static void initEdges(int scale, float (*edges)[6], int edges_len)
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
-    if (!SDL_SetAppMetadata("Example splitscreen shooter game", "1.0", "com.example.woodeneye-008")) {
+    if (!SDL_SetAppMetadata("3D engine to load .glb", "1.0", "cre.project.tavar3s")) {
         return SDL_APP_FAILURE;
     }
     int i;
@@ -352,7 +352,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         return SDL_APP_FAILURE;
     }
-    if (!SDL_CreateWindowAndRenderer("examples/demo/woodeneye-008", 640, 480, 0, &as->window, &as->renderer)) {
+    if (!SDL_CreateWindowAndRenderer("cre/demo/tavar3s", 640, 480, 0, &as->window, &as->renderer)) {
         return SDL_APP_FAILURE;
     }
 
