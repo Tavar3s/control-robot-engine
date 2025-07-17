@@ -48,8 +48,7 @@ static const struct {
     { SDL_PROP_APP_METADATA_TYPE_STRING, "game" }
 };
 
-static int whoseMouse(SDL_MouseID mouse, const Player players[], int players_len)
-{
+static int whoseMouse(SDL_MouseID mouse, const Player players[], int players_len) {
     int i;
     for (i = 0; i < players_len; i++) {
         if (players[i].mouse == mouse) return i;
@@ -57,8 +56,7 @@ static int whoseMouse(SDL_MouseID mouse, const Player players[], int players_len
     return -1;
 }
 
-static int whoseKeyboard(SDL_KeyboardID keyboard, const Player players[], int players_len)
-{
+static int whoseKeyboard(SDL_KeyboardID keyboard, const Player players[], int players_len) {
     int i;
     for (i = 0; i < players_len; i++) {
         if (players[i].keyboard == keyboard) return i;
@@ -66,8 +64,7 @@ static int whoseKeyboard(SDL_KeyboardID keyboard, const Player players[], int pl
     return -1;
 }
 
-static void update(Player *players, int players_len, Uint64 dt_ns)
-{
+static void update(Player *players, int players_len, Uint64 dt_ns) {
     int i;
     for (i = 0; i < players_len; i++) {
         Player *player = &players[i];
@@ -112,8 +109,7 @@ static void update(Player *players, int players_len, Uint64 dt_ns)
     }
 }
 
-static void drawCircle(SDL_Renderer *renderer, float r, float x, float y)
-{
+static void drawCircle(SDL_Renderer *renderer, float r, float x, float y) {
     float ang;
     SDL_FPoint points[CIRCLE_DRAW_SIDES_LEN];
     int i;
@@ -153,8 +149,7 @@ static void drawClippedSegment(
 }
 
 static char debug_string[32];
-static void draw(SDL_Renderer *renderer, const float (*edges)[6], const Player players[], int players_len)
-{
+static void draw(SDL_Renderer *renderer, const float (*edges)[6], const Player players[], int players_len) {
     int w, h, i, j, k;
     if (!SDL_GetRenderOutputSize(renderer, &w, &h)) {
         return;
@@ -236,8 +231,7 @@ static void draw(SDL_Renderer *renderer, const float (*edges)[6], const Player p
     SDL_RenderPresent(renderer);
 }
 
-static void initPlayers(Player *players, int len)
-{
+static void initPlayers(Player *players, int len) {
     int i;
     for (i = 0; i < len; i++) {
         players[i].pos[0] = 8.0 * (i & 1 ? -1.0 : 1.0);
@@ -263,8 +257,7 @@ static void initPlayers(Player *players, int len)
     }
 }
 
-static void initEdges(int scale, float (*edges)[6], int edges_len)
-{
+static void initEdges(int scale, float (*edges)[6], int edges_len) {
     int i, j;
     const float r = (float)scale;
     const int map[24] = {
@@ -291,8 +284,7 @@ static void initEdges(int scale, float (*edges)[6], int edges_len)
     }
 }
 
-SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
-{
+SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     if (!SDL_SetAppMetadata("3D engine to load .glb", "1.0", "cre.project.tavar3s")) {
         return SDL_APP_FAILURE;
     }
@@ -328,8 +320,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
-{
+SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
     AppState *as = appstate;
     Player *players = as->players;
     int player_count = as->player_count;
@@ -417,8 +408,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppIterate(void *appstate)
-{
+SDL_AppResult SDL_AppIterate(void *appstate) {
     AppState *as = appstate;
     static Uint64 accu = 0;
     static Uint64 last = 0;
@@ -441,7 +431,6 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     return SDL_APP_CONTINUE;
 }
 
-void SDL_AppQuit(void *appstate, SDL_AppResult result)
-{
+void SDL_AppQuit(void *appstate, SDL_AppResult result) {
     SDL_free(appstate); // just free the memory, SDL will clean up the window/renderer for us.
 }
