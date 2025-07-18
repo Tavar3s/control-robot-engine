@@ -1,0 +1,1 @@
+gcc .\test\run-tests.c .\source\cre_menu-main.c -o .\output\teste.exe -I "C:\SDL\x86_64-w64-mingw32\include" -I "C:\SDL_ttf\x86_64-w64-mingw32\include" -I "C:\FreeType\include"-L "C:\SDL\x86_64-w64-mingw32\lib" -L "C:\SDL_ttf\x86_64-w64-mingw32\lib" -L "C:\FreeType\builds" -lSDL3 -lSDL3_ttf -lFreeType

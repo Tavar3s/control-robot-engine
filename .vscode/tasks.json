@@ -1,0 +1,20 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Tests",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-o",
+                "run-tests",
+                "run-tests.c"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
